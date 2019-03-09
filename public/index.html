@@ -13,6 +13,12 @@
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link
+  rel="stylesheet"
+  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+  integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+  crossorigin="anonymous"
+/>
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -23,6 +29,25 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+    <!-- <script>
+
+      $(function() {
+
+     var people = [];
+  
+     $.getJSON('subscribers.json', function(data) {
+         $.each(data.subscribers, function(i, f) {
+            var tblRow = "<tr>" + "<td>" + f.name + "</td>" +
+             "<td>" + f.contact + "</td>" + "<td>" + f.email + "</td>" + "<td>" + f.address + "</td>" + "</tr>"
+             $(tblRow).appendTo("#tableId tbody");
+       });
+  
+     });
+  
+  });
+  </script> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -37,5 +62,87 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script src="https://unpkg.com/react/umd/react.production.js" crossorigin />
+
+    <script
+      src="https://unpkg.com/react-dom/umd/react-dom.production.js"
+      crossorigin
+    />
+    
+    <script
+      src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js"
+      crossorigin
+    />
+    
+    <script>var Alert = ReactBootstrap.Alert;</script>
+
+    <script>
+     
+
+$(document).ready(function(){
+  var data = JSON.parse($("#subscribers").val());
+  $('#formId').hide();
+  $("#list").click(function(){
+    if($('#tableId tr').length>0){
+      $('#tableId').show();
+      $('#formId').hide();
+      return;
+    }
+    
+
+          
+          console.log(data);    
+          var tblRow1="<thead>" + "<tr>" + "<th>" + "Name" + "</th>" + "<th>" + "Contact" + "</th>" + "<th>" + "Email" + "</th>" +  "<th>" + "Address" + "</th>" + "</tr>" + "</thead>" + "<tbody>";
+  
+          $.each(data, function(i, f) {
+            // <thead> <tr> <th>Name</th> <th>Contact</th> <th>Email</th> <th>Address</th> </tr> </thead><tbody>
+            tblRow1 += "<tr id='sub-"+i+"'>" + "<td>" + f.name + "</td>" + "<td>" + f.contact + "</td>" + "<td>" + f.email + "</td>" + "<td>" + f.address + "</td>" + "<td>" + "<a class='remove-sub' href='#'>delete</a>" + "</td>" + "</tr>" + "</tbody>";
+            
+      });
+      $(tblRow1).appendTo("#tableId");
+
+      });
+
+      $("#add").click(function() {
+    $('#tableId').hide();
+    $('#formId').show();
+    
+});
+
+  $(document).on("submit","#formId",function(event){
+      event.preventDefault();
+      var formData = {
+      name : $("#formGridName").val(),
+      email : $("#formGridEmail").val(),
+      contact : $("#formGridContact").val(),
+      address : $("#formGridAddress1").val(),
+  };
+    data.push(formData);
+    console.log(data);
+  });
+
+  $(document).on("click",".remove-sub",function(event){
+    event.preventDefault();
+    var index = parseInt($(this).parent().parent().attr("id").split("-")[1]);
+    $(this).parent().parent().remove();
+    console.log(index);
+    data.splice(index,1);
+    reloadSubscribers();
+  });
+
+  function reloadSubscribers(){
+    $("#tableId tbody").html("");
+    var tblRow1 = "";
+    $.each(data, function(i, f) {
+            // <thead> <tr> <th>Name</th> <th>Contact</th> <th>Email</th> <th>Address</th> </tr> </thead><tbody>
+            tblRow1 += "<tr id='sub-"+i+"'>" + "<td>" + f.name + "</td>" + "<td>" + f.contact + "</td>" + "<td>" + f.email + "</td>" + "<td>" + f.address + "</td>" + "<td>" + "<a class='remove-sub' href='#'>delete</a>" + "</td>" + "</tr>" + "</tbody>";
+            
+      });
+    $(tblRow1).appendTo("#tableId");
+  }
+
+  });
+
+</script>
   </body>
 </html>

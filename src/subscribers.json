@@ -1,0 +1,16 @@
+{
+    "subscribers" :[
+     {
+        "name" : "Rahul Singh",
+        "contact": "755843375",
+        "email" : "rs31622@gmail.com",
+        "address" : "b 202 bharat vaibhav apt"
+    },
+    {
+        "name" : "Rahul Singh",
+        "contact":"755843375",
+        "email" : "rs31622@gmail.com",
+        "address" : "b 202 bharat vaibhav apt"
+    }
+ ]   
+}
